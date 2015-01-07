@@ -1,4 +1,4 @@
-## Linear Model
+# MLlib Basics
 
 ## Data Types
 In **MLlib**, each trainning sample is also called a **labeled point**. The class `LabeledPoint` have two members:
