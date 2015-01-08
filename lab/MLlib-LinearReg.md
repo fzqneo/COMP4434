@@ -32,6 +32,7 @@ Step 2. Study the code in `src/example/LinearReg.scala`
   }
   ```
   Explanation:
+  + The spark installation comes along with some sample data of machine learning under `data/mllib`
   + The class `LinearRegressionWithSGD` provides a linear regression model *without* regularization.
   + It trains the model using **stochastic gradient descent (SGD)**.
   + The singleton object `LinearRegressionWithSGD` (same name) provides a convenience way to obtain a trained model using default settings.
@@ -47,12 +48,13 @@ Step 5. In the virtual machine, submit the job the **Spark**. (Assume you alread
 ```bash
 bigdata@bigdata-VirtualBox:~$ cd Programs/spark-1.2.0-bin-hadoop1/
 bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo bin/spark-submit --class "example.LinearReg" --master spark://localhost:7077 /media/sf_vmshared/MLexample.jar
+[sudo] password for bigdata: 
 Spark assembly has been built with Hive, including Datanucleus jars on classpath
 training Mean Squared Error = 6.206807793307759
 ```
 
 ### Exercise
-The `LinearRegressionWithSGD` class uses no regularization, which may lead to the problem of \_\_\_\_\_\_\_\_\_\_\_. 
+The class `LinearRegressionWithSGD` uses no regularization, which may lead to the problem of \_\_\_\_\_\_\_\_\_\_\_. 
 MLlib also provides linear regression models that use L1 or L2 regularization. Read the short section at the following link and try to modify the example code to train a model with L2 regularization.
 
 https://spark.apache.org/docs/latest/mllib-linear-methods.html#linear-least-squares-lasso-and-ridge-regression
