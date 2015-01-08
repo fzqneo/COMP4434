@@ -43,7 +43,7 @@ Step 3. Export the project as a `jar` file. (c.f. previous Spark lab)
 
 Step 4. Copy the jar file to the shared folder of the virtual machine.
 
-Step 5. In the virtual machine, submit the job the **Spark**. (Assume you already have Spark started.) Note that you need to specify the `--class` that contains the `main` function. You may also need administrator privilege to access the shared folder via `sudo`.
+Step 5. In the virtual machine, submit the job to **Spark**. (Assume you already have Spark started.) Note that you need to specify the `--class` that contains the `main` function. You may also need administrator privilege to access the shared folder via `sudo`.
 
 ```bash
 bigdata@bigdata-VirtualBox:~$ cd Programs/spark-1.2.0-bin-hadoop1/
