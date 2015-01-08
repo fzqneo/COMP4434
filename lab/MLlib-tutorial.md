@@ -69,3 +69,9 @@ val parsedData = data.map { line =>
   LabeledPoint(parts(0).toDouble, Vectors.dense(parts(1).split(' ').map(_.toDouble)))
 }.cache()
 ```
+
+Extract only the features of the dataset (remove the labels):
+
+```scala
+val onlyFeatures: RDD[Vector] = parsedData.map(x => x.features)
+```
