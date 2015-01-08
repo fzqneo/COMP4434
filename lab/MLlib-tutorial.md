@@ -19,10 +19,14 @@ val sv1: Vector = Vectors.sparse(3, Array(0, 2), Array(1.0, 3.0))
 val sv2: Vector = Vectors.sparse(3, Seq((0, 1.0), (2, 3.0)))
 ```
 
+See the documentation of `Vectors` at https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.linalg.Vectors$
+
 ### LabeledPoint
 In **MLlib**, each trainning sample is also called a **labeled point**. The class `LabeledPoint` have two members:
 1. `label: Double`: The label of this point. In the case of binary classification, it is either 1 or 0. In multi-class classification, it is 0, 1, 2, 3, ... In regression problems, it is the actual output from the hypothesis.
 2. `features: Vector`: The feature vector.
+
+See the class documentation of `LabeledPoint` at https://spark.apache.org/docs/latest/api/scala/ndex.html#org.apache.spark.mllib.regression.LabeledPoint
 
 The `LIBSVM` file format stores a collection of labeled points (or say, a training set) in the sparse form:
 
@@ -36,11 +40,5 @@ bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ head -1 data/mlli
 0 128:51 129:159 130:253 131:159 132:50 155:48 156:238 157:252 158:252 159:252 160:237 182:54 183:227 184:253 185:252 186:239 187:233 188:252 189:57 190:6 208:10 209:60 210:224 211:252 212:253 213:252 214:202 215:84 216:252 217:253 218:122 236:163 237:252 ...
 ```
 
-See the class documentation of `LabeledPoint` at https://spark.apache.org/docs/latest/api/scala/ndex.html#org.apache.spark.mllib.regression.LabeledPoint
 
-
-```bash
-$ head -1 sample_libsvm_data.txt
-$ ls
-```
 
