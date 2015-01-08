@@ -1,4 +1,4 @@
-# MLlib Basics (in Scala)
+# MLlib Basics (in Spark/Scala)
 
 ## Data Types
 
