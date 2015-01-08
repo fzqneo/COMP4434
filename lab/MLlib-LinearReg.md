@@ -2,6 +2,8 @@
 
 ## Linear Regression
 
+### Example
+
 Reference: https://spark.apache.org/docs/latest/mllib-linear-methods.html#linear-least-squares-lasso-and-ridge-regression
 
 Step 1. Download `MLexample.zip` from blackboard, unzip and import it into scala-elipse
@@ -36,12 +38,21 @@ Step 2. Study the code in `src/example/LinearReg.scala`
   + If you want to train a model with custom settings, you need to create a new object with `new LinearRegressionWithSGD()`. See https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.regression.LinearRegressionWithSGD 
   + The **mean squared error (MSE)** measures how *good* the model is.
  
-Step 3. Export the project as a jar file.
+Step 3. Export the project as a `jar` file. (c.f. previous Spark lab)
 
+Step 4. Copy the jar file to the shared folder of the virtual machine.
 
+Step 5. In the virtual machine, submit the job the **Spark**. (Assume you already have Spark started.) Note that you need to specify the `--class` that contains the `main` function. You may also need administrator privilege to access the shared folder via `sudo`.
 
 ```bash
+bigdata@bigdata-VirtualBox:~$ cd Programs/spark-1.2.0-bin-hadoop1/
 bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo bin/spark-submit --class "example.LinearReg" --master spark://localhost:7077 /media/sf_vmshared/MLexample.jar
 Spark assembly has been built with Hive, including Datanucleus jars on classpath
 training Mean Squared Error = 6.206807793307759
 ```
+
+### Exercise
+The `LinearRegressionWithSGD` class uses no regularization, which may lead to the problem of \_\_\_\_\_\_\_\_\_\_\_. 
+MLlib also provides linear regression models that use L1 or L2 regularization. Read the short section at the following link and try to modify the example code to train a model with L2 regularization.
+
+https://spark.apache.org/docs/latest/mllib-linear-methods.html#linear-least-squares-lasso-and-ridge-regression
