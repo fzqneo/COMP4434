@@ -1,6 +1,6 @@
 # MLlib Basics (in Spark/Scala)
 
-## Linear Regression
+## Linear Regression and Mean Squared Error
 
 ### Example
 
