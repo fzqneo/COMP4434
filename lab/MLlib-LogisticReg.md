@@ -61,5 +61,4 @@ Area under ROC = 0.98
 
 ### Exercise
 The default `LogisticRegressionWithSGD` does not add the **intercept**, which may cause \_\_\_\_\_\_\_\_\_\_\_\_\_\_. Try to modify the code above to add the intercept to the model. Observe how it would improve the quality of the model. 
-
 Hint: when you want to train a model with non-default settings, you need to explicitly create a new model object like `new LogisticRegressionWithSGD()`. See more hints at https://spark.apache.org/docs/latest/mllib-linear-methods.html#examples
