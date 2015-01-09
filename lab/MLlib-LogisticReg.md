@@ -1,6 +1,6 @@
 # MLlib Basics (in Spark/Scala)
 
-## Logistic Regression
+## Logistic Regression and Split of Dataset
 
 Logsitic Regression is a model that learns **binary classification**. That is, for each sample, it tries to classify it as positive (1) or negative (0).
 
@@ -42,7 +42,7 @@ Step 2. Study the code in `src/example/LogisticReg.scala`
   Explanation:
   
   + The input file is in the `LIBSVM` format. The utility object `MLUtils` helps to parse LIBSVM files as input.
-  + The code splits the input data into two sets: a training set and a test set. We train the model with the training set and evaulate the model with the test set. (Why?)
+  + The code splits the input data into two sets: a training set and a test set. We train the model with the training set and evaulate the model with the test set. (**Why?**)
   + Similarly to `LinearRegressionWithSGD`, `LogisticRegressionWithSGD` is the name of both a class and a singleton. The singleton `LogisticRegressionWithSGD` trains a model on input data using default settings.
   + **Area under ROC** is a metric that measures how *good* the model is. Generally it is a value between 0.5 and 1. A larger area under ROC means a better model.
 
