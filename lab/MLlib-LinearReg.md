@@ -37,7 +37,7 @@ Step 2. Study the code in `src/example/LinearReg.scala`
   + It trains the model using **stochastic gradient descent (SGD)**.
   + The singleton object `LinearRegressionWithSGD` (same name) provides a convenience way to obtain a trained model using default settings.
   + If you want to train a model with custom settings, you need to create a new object with `new LinearRegressionWithSGD()`. See https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.regression.LinearRegressionWithSGD 
-  + The **mean squared error (MSE)** measures how *good* the model is.
+  + The **mean squared error (MSE)** measures how well the model fits the training data. A smaller MSE means the model fits the training data better.
  
 Step 3. Export the project as a `jar` file. (c.f. previous Spark lab)
 
@@ -54,7 +54,8 @@ training Mean Squared Error = 6.206807793307759
 ```
 
 ### Exercise
-The class `LinearRegressionWithSGD` uses no regularization, which may lead to the problem of \_\_\_\_\_\_\_\_\_\_\_. 
+1. Try to increase the number of training iterations. Observe how it would affect the MSE on training data.
+2. *MSE on training data* is actually not a good measure of the quality of the trained model. Why?
+3. The class `LinearRegressionWithSGD` uses no regularization, which may lead to the problem of \_\_\_\_\_\_\_\_\_\_\_. 
 MLlib also provides linear regression models that use L1 or L2 regularization. Read the short section at the following link and try to modify the example code to train a model with L2 regularization.
-
 https://spark.apache.org/docs/latest/mllib-linear-methods.html#linear-least-squares-lasso-and-ridge-regression
