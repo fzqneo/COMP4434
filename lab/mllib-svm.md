@@ -43,16 +43,17 @@ Explanation:
 + The `transform()` method scales a feature vector according to the values calculated in last step.
 
 ### Adding Higher Degree Terms
-Sometimes, we can fit non-linear data with a linear model by explicitly adding higher degree terms of existing features.
+Sometimes, we can fit non-linear data with a linear model by explicitly adding higher degree terms of existing features. However, adding higher degree terms does not necessarily lead to better models, because \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-For example, assuming the original data file contains two features (x<sub>1</sub>, x<sub>2</sub>), we can extend it by adding square terms: (x<sub>1</sub>, x<sub>2</sub>, x<sub>1</sub><sup>2</sup>, x<sub>2</sub><sup>2</sup>, x<sub>1</sub>x<sub>2</sub>)
+For example, assuming the original data file contains two features (x<sub>1</sub>, x<sub>2</sub>), we can extend it by adding 2-degree terms: (x<sub>1</sub>, x<sub>2</sub>, x<sub>1</sub><sup>2</sup>, x<sub>2</sub><sup>2</sup>, x<sub>1</sub>x<sub>2</sub>)
 
 ```scala
 	val extendedData = parsedData.map { point =>
 	  val label = point.label
 	  val original = point.features.toArray
-	  val squared = original.map(x => x*x)
-	  val extendedFeatures = Vectors.dense(original ++ squared)
+	  val x1 = original(0)
+	  val x2 = original(1)
+	  val extendedFeatures = Vectors.dense(x1, x2, x1*x1, x2*x2, x1*x2)
 	  LabeledPoint(label, extendedFeatures)
 	}
 ```
