@@ -11,9 +11,9 @@ The class `SVMWithSGD` trains an SVM with stochastic gradient descent (SGD). Its
 ## Input Transformation and Manipulation
 
 ### Standard Scale
-If two features are at very different scales, they may have imbalanced influence on the machine learning model. For example, a feature x<sub>1</sub> may range from 0.0001 to 0.001 and another feature x<sub>2</sub> may range from 1 billion to 10 billion. To improve training efficiency, people sometimes transform/normalize/scale the features. A typical approach is to scale the features to have a mean of 0 and in the units of (original) variance.
+If two features are at very different scales, they may have imbalanced influence on the machine learning model. For example, a feature x<sub>1</sub> may range from 0.0001 to 0.001 and another feature x<sub>2</sub> may range from 1 billion to 10 billion. To improve training efficiency, people sometimes transform/normalize/scale the features. A typical approach is to scale the features to have a mean of 0 and a variance of 1, such that each feature falls in roughly the same scale.
 
-**MLlib** provides convenient facilities to do that:
+The class `StandardScaler` in **MLlib** provides convenient facilities to do that:
 
 ```scala
 import org.apache.spark.SparkContext._
@@ -38,9 +38,9 @@ Reference: https://spark.apache.org/docs/latest/mllib-feature-extraction.html#st
 
 Explanation:
 
-+ The class `StandardScaler` provides the facility to scale the features with mean and variance.
++ The class `StandardScaler` provides the facility to scale the features with mean and variance optionally.
 + Before it can scale a feature, it must first scan through all training data to calculate the mean and variance, and store them in internal states. The `fit()` method does this job.
-+ The `transform()` method scales the feature vector a sample according to the values calculated in last step.
++ The `transform()` method scales a feature vector according to the values calculated in last step.
 
 ### Adding Higher Degree Terms
 Sometimes, we can fit non-linear data with a linear model by explicitly adding higher degree terms of existing features.
