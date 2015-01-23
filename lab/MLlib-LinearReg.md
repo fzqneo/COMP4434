@@ -6,7 +6,7 @@
 
 Reference: https://spark.apache.org/docs/latest/mllib-linear-methods.html#linear-least-squares-lasso-and-ridge-regression
 
-Step 1. Download `MLexample.zip` from blackboard, unzip and import it into scala-elipse
+Step 1. Download [MLexample.zip](MLexample.zip), unzip and import it into scala-elipse
 
 Step 2. Study the code in `src/example/LinearReg.scala`
 
@@ -32,10 +32,14 @@ Step 2. Study the code in `src/example/LinearReg.scala`
   }
   ```
   Explanation:
+  + The `textFile` method parses a text file and returns an RDD of Strings. Each string is a line in the original file.
+  + The `map` function of an `RDD` takes a **function** as input and transforms each element to something else, according to the given function. In this case, the whole body in the braces **{}** is an argument passed to `data.map()`. The body in **{}** itself is a function. It takes an element of the RDD --- in the example, a String (the variable name `line` can be arbitrary) --- and turns it into a labeled point.
+  + THe returned type of `map()` is an RDD of *something*. In above, something = `LabeledPoint`.
   + The spark installation comes along with some sample data of machine learning under `data/mllib`
   + The class `LinearRegressionWithSGD` provides a linear regression model *without* regularization.
   + It trains the model using **stochastic gradient descent (SGD)**.
-  + The singleton object `LinearRegressionWithSGD` (same name) provides a convenience way to obtain a trained model using default settings.
+  + The companion object `LinearRegressionWithSGD` (same name) provides a convenience way to obtain a trained model using default settings. It saves you the trouble to `new` an object.
+  + The `train()` method produces a linear regression model that has been trained on the input data. A **model** can be used to predict the labels of feature data.
   + If you want to train a model with custom settings, you need to create a new object with `new LinearRegressionWithSGD()`. See https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.regression.LinearRegressionWithSGD for more information.
   + The **mean squared error (MSE)** measures how well the model fits the training data. A smaller MSE means the model fits the training data better.
  
