@@ -28,6 +28,12 @@ In **MLlib**, each trainning sample is also called a **labeled point**. The clas
 1. `label: Double`: The label of this point. In the case of binary classification, it is either 1 or 0. In multi-class classification, it is natual numbers 0, 1, 2, 3, ... In regression problems, it is usually a real number.
 2. `features: Vector`: The feature vector. Each feature is a Double.
 
+For example, you can create a labeled point with label "1" (a positive point) and a feature vector (0.2, 3, -0.1):
+
+```scala
+new LabeledPoint(1.0, Vectors.dense(0.2, 3.0, -0.1))
+```
+
 See the class documentation of `LabeledPoint` at https://spark.apache.org/docs/latest/api/scala/ndex.html#org.apache.spark.mllib.regression.LabeledPoint
 
 The `LIBSVM` file format stores a collection of labeled points (or say, a training set) in the sparse form:
