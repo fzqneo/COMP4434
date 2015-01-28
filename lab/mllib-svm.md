@@ -63,6 +63,4 @@ For example, assuming the original data file contains two features (x<sub>1</sub
 	  LabeledPoint(label, extendedFeatures)
 	}
 ```
-<span tyle="color:white">
-Reference answer: overfitting.
-</span>
+<span style="color:white">Reference answer: overfitting.</span>
