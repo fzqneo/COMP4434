@@ -104,7 +104,3 @@ Fill in the ???'s in below:
 ```scala
 val onlyFeatures: ??? = parsedData.map({point => ???????})
 ```
-
-<span style="color:white">
-1.0 | (0.2, 3.0, -0.1) | RDD[Vector] | point.features
-</span>
