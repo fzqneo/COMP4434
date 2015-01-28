@@ -49,23 +49,29 @@ Explanation:
 + Before a scaler can scale a feature, it must first scan through **all** training data to calculate the global mean and variance, and store them in internal states. If the feature vectors have *d* dimensions, it would compute *d* means and *d* variances. The `fit()` method does this job.
 + The `StandardScaler.fit()` method only needs the feature values. It doesn't care about the labels. So we need to extract the feature vectors from `data` using a `map()`.
 + After we have calculated the global mean and variance, we can use the scalers to scale the features. The `StandardScaler.transform()` method receives a feature vector and returns a scaled one.
-+ Here, `data1` and `data2` are both  of type \_\_\_\_\_\_\_\_\_\_.
++ Here, `data1` and `data2` are both  of type \_\_\_\_\_\_\_\_\_\_. 
++ Note how the `map()` function is used here: for each point in the original `data`, we keep its label unchanged, but use a transformed (scaled) version of the features.
++ We can then create ML models based on `data1` or `data2`.
 
 ### Adding Higher Degree Terms
-Sometimes, we can fit non-linear data with a linear model by explicitly adding higher degree terms of existing features. However, adding higher degree terms does not necessarily lead to better models, because \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Sometimes, we can fit non-linear data with a linear model by explicitly adding higher degree terms of existing features. However, adding higher degree terms does not necessarily lead to better models, because it can be  \_\_\_\_\_\_\_\_\_\_.
 
 For example, assuming the original data file contains two features (x<sub>1</sub>, x<sub>2</sub>), we can extend it by adding 2-degree terms: (x<sub>1</sub>, x<sub>2</sub>, x<sub>1</sub><sup>2</sup>, x<sub>2</sub><sup>2</sup>, x<sub>1</sub>x<sub>2</sub>)
 
 ```scala
-	val extendedData = parsedData.map { point =>
+	val dataWithSquares = parsedData.map { point =>
 	  val label = point.label
 	  val original = point.features.toArray
 	  val x1 = original(0)
 	  val x2 = original(1)
 	  val extendedFeatures = Vectors.dense(x1, x2, x1*x1, x2*x2, x1*x2)
-	  LabeledPoint(label, extendedFeatures)
+	  new LabeledPoint(label, extendedFeatures)
 	}
 ```
+
+### Exercise
+Create and train an SVM model `model0` based on the original unscaled `data`. Create and train an SVM model `model1` based on `data1` and `model2` based on `data2`. Then use the **Area under ROC** metrics to compare the quality of these three models.
+
 <span style="color:white">
 Reference answer: RDD[LabeledPoint], overfitting.
 </span>
