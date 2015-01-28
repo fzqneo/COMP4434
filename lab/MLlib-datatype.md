@@ -4,9 +4,9 @@
 
 ### Vector
 
-In **MLlib**, a feature vector is represented as *a Vector of Doubles*. `Vector` is a class.
+In **MLlib**, a feature vector is represented as a `Vector` object, which is **a vector of Doubles**.
 
-**Note: Scala automatically imports its native `Vector` class. However, when using MLlib, we need to use the `Vector` class overridden by the library. So you must explicitly import `org.apache.spark.mllib.linalg.Vector`. **
+**Note: Scala automatically imports its native `Vector` class. However, when using MLlib, we need to use the `Vector` class overridden by the MLlib library. So you must explicitly import `org.apache.spark.mllib.linalg.Vector`. **
 
 A vector can be represented in two forms: **dense** and **sparse**. We can use the factory class `Vectors` to create the vectors we need. (Note the difference between `Vector` and `Vectors`.)
 
@@ -23,16 +23,25 @@ val sv2: Vector = Vectors.sparse(3, Seq((0, 1.0), (2, 3.0)))
 
 See the documentation of `Vectors` at https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.linalg.Vectors$
 
+### Exercise
+Try to create the following vector in the three differnt ways described above:
+```scala
+// (1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -2.0, 0.0, 0.0, 3.0, 0.0)
+```
+What's the pros and cons of the different ways? Which one do you prefer?
+
 ### LabeledPoint
-In **MLlib**, each trainning sample is also called a **labeled point**. The class `LabeledPoint` have two members:
+In **MLlib**, each trainning sample is also called a **labeled point**. The class `LabeledPoint` has two members:
 1. `label: Double`: The label of this point. In the case of binary classification, it is either 1 or 0. In multi-class classification, it is natual numbers 0, 1, 2, 3, ... In regression problems, it is usually a real number.
 2. `features: Vector`: The feature vector. Each feature is a Double.
 
-For example, you can create a labeled point with label "1" (a positive point) and a feature vector (0.2, 3, -0.1):
-
+For example, you can create a labeled point with label "1" (a positive point) and a feature vector (0.2, 3, -0.1):  
 ```scala
-new LabeledPoint(1.0, Vectors.dense(0.2, 3.0, -0.1))
+val point1 = new LabeledPoint(1.0, Vectors.dense(0.2, 3.0, -0.1))
 ```
+Question:  
+1. `point1.label = ` \_\_\_\_\_\_\_\_\_\_
+2. `point1.features = ` \_\_\_\_\_\_\_\_\_\_
 
 See the class documentation of `LabeledPoint` at https://spark.apache.org/docs/latest/api/scala/ndex.html#org.apache.spark.mllib.regression.LabeledPoint
 
