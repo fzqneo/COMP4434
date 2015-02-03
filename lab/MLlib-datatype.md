@@ -15,13 +15,11 @@ import org.apache.spark.mllib.linalg.{Vector, Vectors}
 
 // Create a dense Vector (56.0, 0.0, 78.0) using the factory Vectors
 val dv: Vector = Vectors.dense(56.0, 0.0, 78.0)
-
 // Create a sparse vector (56.0, 0.0, 78.0) by specifying its indices and values corresponding to nonzero entries.
 // 3 is the length of the vector
 // Array(0,2) specifies the 0-th and 2-nd elements are non-zero
 // Array(56.0, 78.0) specifies the values of those non-zero elements
 val sv1: Vector = Vectors.sparse(3, Array(0, 2), Array(56.0, 78.0))
-
 // Create a sparse vector (56.0, 0.0, 78.0)  by specifying its nonzero entries.
 // 3 is the length of the vector
 // Seq() gives a sequence of (index, value) pairs
