@@ -15,17 +15,20 @@ import org.apache.spark.mllib.linalg.{Vector, Vectors}
 
 // Create a dense Vector (56.0, 0.0, 78.0) using the factory Vectors
 val dv: Vector = Vectors.dense(56.0, 0.0, 78.0)
+
 /** 
   * Create a sparse vector (56.0, 0.0, 78.0) by specifying its indices and values corresponding to nonzero entries.
-  * 3 is the length of the vector
-  * Array(0,2) specifies the 0-th and 2-nd elements are non-zero
-  * Array(56.0, 78.0) specifies the values of those non-zero elements
+  * 3 is the length of the vector.
+  * Array(0,2) specifies the 0-th and 2-nd elements are non-zero.
+  * Array(56.0, 78.0) specifies the values of those non-zero elements.
   */
 val sv1: Vector = Vectors.sparse(3, Array(0, 2), Array(56.0, 78.0))
-/** Create a sparse vector (56.0, 0.0, 78.0)  by specifying its nonzero entries.
-  * 3 is the length of the vector
-  * Seq() gives a sequence of (index, value) pairs
-  * (0, 56.0) defines the 0-th element with value 56.0, and so on
+
+/** 
+  * Create a sparse vector (56.0, 0.0, 78.0)  by specifying its nonzero entries.
+  * 3 is the length of the vector.
+  * Seq() gives a sequence of (index, value) pairs.
+  * (0, 56.0) defines the 0-th element with value 56.0, and so on.
   */
 val sv2: Vector = Vectors.sparse(3, Seq((0, 56.0), (2, 78.0)))
 ```
@@ -69,7 +72,8 @@ bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ head -1 data/mlli
 0 128:51 129:159 130:253 131:159 132:50 155:48 156:238  ...
 ```
 
-We can see the first training sample has a label '0'. And the data set has at least several hundred features. The 128-th feature x<sub>128</sub> has value 51, etc.
+We can see the first training sample has a label '0'. And the data set has at least several hundred features. The 128-th feature x<sub>128</sub> has value 51, 
+the 130-th feature x<sub>130</sub> has value 253, etc.
 
 The `MLUtils` utility class helps us to load the training set from a `LIBSVM` file into an object of type `RDD[LabeledPoint]`. At this moment, we just think `RDD` as a collection type.
 
@@ -129,9 +133,10 @@ It receives a String, called `line` (the variable name can actually be arbitrary
 and returns a `LabeledPoint` based on `line`.
 Hence, `data.map {...}` above returns an `RDD[LabeledPoint]`.
 
-In the second usage, the `map()` function transform an array of String to an array of Double.
+In its second usage, the `map()` function transforms an array of String to an array of Double.
 To illustrate, imagine `line` being the string "1,23 56 89"
 ```scala
+// line = "1,23 56 89"
 val parts = line.split(',')
 // parts = Array("1", "23 56 89")  // array of string
 // parts(0) = "1" (string)
