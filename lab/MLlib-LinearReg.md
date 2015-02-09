@@ -39,6 +39,7 @@ Step 2. Study the code in `src/example/LinearReg.scala`
     * Trains the model using **stochastic gradient descent (SGD)**.
     * Trains with default setting (e.g., default setting uses no regularization).
   + The companion object saves your trouble to create a new object. However, if you want to train a model with custom settings, you must explictly create a new object with `new LinearRegressionWithSGD()`. Here, `LinearRegressionWithSGD` is a **class** name.  See https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.regression.LinearRegressionWithSGD for more information.
+  + A `LinearRegressionModel` has a `predict()` function. It receive a feature vector (e.g., `point.features`), and outputs a predicted label for that point.
   + The last code segment calculates the **mean squared error (MSE)** between the real labels and the labels predicted by our model. MSE measures how well the model fits the training data. A smaller MSE means the model fits the training data better.
  
 Step 3. Export the project as a `jar` file. (c.f. previous Spark lab)
