@@ -159,6 +159,7 @@ All of the above example code can be found in **DataType** under package **examp
 
 ```bash
 bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo ./bin/spark-submit --class "example.DataType" --master spark://localhost:7077 /path/to/MLexample.jar
+[sudo] password for bigdata: 
 ```
 
 ### Excercise
