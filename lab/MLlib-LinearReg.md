@@ -49,7 +49,7 @@ Step 5. In the virtual machine, submit the job to **Spark**. (Assume you already
 
 ```bash
 bigdata@bigdata-VirtualBox:~$ cd Programs/spark-1.2.0-bin-hadoop1/
-bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo bin/spark-submit --class "example.LinearReg" --master spark://localhost:7077 /media/sf_vmshared/MLexample.jar
+bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo bin/spark-submit --class "example.LinearReg" --master spark://localhost:7077 /path/to/MLexample.jar
 [sudo] password for bigdata: 
 Spark assembly has been built with Hive, including Datanucleus jars on classpath
 training Mean Squared Error = 6.206807793307759
