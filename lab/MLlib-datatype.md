@@ -151,7 +151,11 @@ parts(1).split(' ')  // = Array("23", "56", "89") array of string
 parts(1).split(' ').to(_.toDouble)  // = Array(23, 56, 89) array of double
 ```
 ### Running the Examples in Spark
-All of the above example code can be found in **DataType** under package **example**. You can submit it to Spark for execution with the command (c.f. previous lab Spark):
+All of the above example code can be found in **DataType** under package **example**. You can submit it to Spark for execution (c.f. previous lab Spark):
+
+1. Export the project as a `jar` file.
+2. Copy the jar file to the shared folder of the virtual machine.
+3. In the virtual machine, submit the job to **Spark**. (Assume you already have Spark started.) Note that you need to specify the `--class` that contains the `main` function. You may also need administrator privilege to access the shared folder via `sudo`.
 
 ```bash
 bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo ./bin/spark-submit --class "example.DataType" --master spark://localhost:7077 /path/to/MLexample.jar
