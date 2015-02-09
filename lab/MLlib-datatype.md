@@ -2,6 +2,8 @@
 
 ## Data Types
 
+Download [MLexample.zip](MLexample.zip) and import it into Eclipse. The source code used in this lab is in the file **DataType.scala** under package **example**.
+
 ### Vector
 
 In **MLlib**, a feature vector is represented as a `Vector` object, which is **a vector of Doubles**.
@@ -32,6 +34,8 @@ val sv1: Vector = Vectors.sparse(3, Array(0, 2), Array(56.0, 78.0))
   */
 val sv2: Vector = Vectors.sparse(3, Seq((0, 56.0), (2, 78.0)))
 ```
+Explanation:
+1. `val dv: Vector` declares a value `dv` of type `Vector`. Unlike in C/C++ and Java, in Scala, the **type declaration** is placed **after** the variable and can often be omitted, if Scala can infer it automatically. In the above example, you can also write `val dv = Vectors.dense(...)` by dropping the `:Vector` type declaration. Ditto for `sv1` and `sv2`.
 
 See the documentation of `Vectors` at https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.linalg.Vectors$
 
@@ -64,7 +68,7 @@ The `LIBSVM` file format stores a collection of labeled points (or say, a traini
 
 `label index1:value1 index2:value2 ...`
 
-For example, let's look at the first line of `sample_libsvm_data.txt`:
+For example, let's look at the first line of the file`sample_libsvm_data.txt` under direcotory *~/Programs/spark-1.2.0-bin-hadoop1/data/mllib*:
 
 ```bash
 bigdata@bigdata-VirtualBox:~$ cd Programs/spark-1.2.0-bin-hadoop1/
@@ -80,14 +84,15 @@ The `MLUtils` utility class helps us to load the training set from a `LIBSVM` fi
 ```scala
 import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.mllib.regression.LabeledPoint
-import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.rdd.RDD
 
 val examples: RDD[LabeledPoint] = MLUtils.loadLibSVMFile(sc, "data/mllib/sample_libsvm_data.txt")
+// Again, you can drop the type declaration and simply write:
+// val examples = MLUtils.loadLibSVMFile(sc, "data/mllib/sample_libsvm_data.txt")
 ```
 
 ### Other formats
-We can also load the samples from a dense-formed text file. Let's look at the file `data/mllib/ridge-data/lpsa.data `:  
+We can also load the samples from a dense-formed text file. Let's look at the first 2 lines of file `data/mllib/ridge-data/lpsa.data `:  
 ```bash
 bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ head -2 data/mllib/ridge-data/lpsa.data 
 -0.4307829,-1.63735562648104 -2.00621178480549 -1.86242597251066 -1.02470580167082 -0.522940888712441 -0.863171185425945 -1.04215728919298 -0.864466507337306
@@ -110,8 +115,8 @@ val parsedData = data.map { line =>
 }.cache()
 ```
 Explanation:  
-1. `sc.textFile()` reads an ordinary text file and return an `RDD[String]` --- for now, we just consider it as an array of lines.
-2. The `map()` function transforms an `RDD[something]` to `RDD[something_else]`. The transformation is specified by the argument passed to the `map()` function. In the above example, the whole body inside **{...}** is an argument passed to `map()`. The body inside **{...}** itself is a function. It transform a `String` to a `LabeledPoint`. The variable name `line` can actually be arbitrary.
+1. `sc.textFile()` reads an ordinary text file and return an `RDD[String]` --- for now, we just consider it as a collection of String. Each line in the file is represented as a String.
+
 
 #### The **map()** function
 The `map()` function is a very important function in Scala and Spark.
@@ -120,7 +125,7 @@ Roughly speaking, these classes are usually a *collection* of things,
 e.g., an array or an RDD.
 A `map()` function transforms a collection of something to a collection of something else. 
 That *something else* depends on the parameter you give to `map()`.
-In particular, each element in the collection is then *mapped* to an element in the output according to what you have specified.
+Specifically, the map function stipulates how an element in the original collection is **mapped** (transformed) to an element in the output.
 
 In the above example, there are two uses of `map()`:
 1. `data.map {...}`
@@ -129,9 +134,9 @@ In the above example, there are two uses of `map()`:
 In the first usage, remember `data` is an `RDD[String]`. So, the `data.map()` maps each line (a String) to something else.
 The whole body inside **{}** is the argument passed to `map()`.
 The inside of **{}** itself is a function.
-It receives a String, called `line` (the variable name can actually be arbitrary),
-and returns a `LabeledPoint` based on `line`.
-Hence, `data.map {...}` above returns an `RDD[LabeledPoint]`.
+It says that, for a given String called `line` (the variable name can actually be arbitrary),
+it will return a `LabeledPoint` calculated from `line`.
+Hence, `data.map {...}` returns an `RDD[LabeledPoint]`.
 
 In its second usage, the `map()` function transforms an array of String to an array of Double.
 To illustrate, imagine `line` being the string "1,23 56 89"
@@ -144,6 +149,12 @@ val parts = line.split(',')
 parts(0).toDouble  // = 1 (double)
 parts(1).split(' ')  // = Array("23", "56", "89") array of string
 parts(1).split(' ').to(_.toDouble)  // = Array(23, 56, 89) array of double
+```
+### Running the Examples in Spark
+All of the above example code can be found in **DataType** under package **example**. You can submit it to Spark for execution with the command (c.f. previous lab Spark):
+
+```bash
+bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo ./bin/spark-submit --class "example.DataType" --master spark://localhost:7077 /path/to/MLexample.jar
 ```
 
 ### Excercise
