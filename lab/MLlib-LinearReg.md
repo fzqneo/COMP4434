@@ -6,7 +6,7 @@
 
 Reference: https://spark.apache.org/docs/latest/mllib-linear-methods.html#linear-least-squares-lasso-and-ridge-regression
 
-Step 1. Download [MLexample.zip](MLexample.zip), unzip and import it into Eclipse
+Step 1. Download [MLexample.zip](../5-MLlib/MLexample.zip). The source code used in this lab is in the file **LinearReg.scala** under package **example**.
 
 Step 2. Study the code in `src/example/LinearReg.scala`
 
@@ -33,13 +33,13 @@ Step 2. Study the code in `src/example/LinearReg.scala`
   ```
   Explanation:
   + The spark installation comes along with some sample data of machine learning under `data/mllib`. The file `ridge-data/lpsa.data` contains data for regression problems.
-  + The first few lines parses the data file into an `RDD[LabeledPoint]` called `data`, as we have already learnt.
-  + The **companion object** `LinearRegressionWithSGD` provides a linear regression model
-    * With default setting (e.g., default setting uses no regularization).
-    * It trains the model using **stochastic gradient descent (SGD)**.
-    * The `train(input: RDD[LabeledPoint], numIter: Int)` method returns a model that has been trained on the input data.
+  + The first code segment parses the data file into an `RDD[LabeledPoint]` variable called `data`, as we have already learnt.
+  + The **companion object** `LinearRegressionWithSGD` provdes a `train()` function. This function:
+    * Returns a `LinearRegressionModel` --- the type of `model`
+    * Trains the model using **stochastic gradient descent (SGD)**.
+    * Trains with default setting (e.g., default setting uses no regularization).
   + The companion object saves your trouble to create a new object. However, if you want to train a model with custom settings, you must explictly create a new object with `new LinearRegressionWithSGD()`. Here, `LinearRegressionWithSGD` is a **class** name.  See https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.regression.LinearRegressionWithSGD for more information.
-  + The last few lines calculate the **mean squared error (MSE)** between the real labels and the labels predicted by our model. MSE measures how well the model fits the training data. A smaller MSE means the model fits the training data better.
+  + The last code segment calculates the **mean squared error (MSE)** between the real labels and the labels predicted by our model. MSE measures how well the model fits the training data. A smaller MSE means the model fits the training data better.
  
 Step 3. Export the project as a `jar` file. (c.f. previous Spark lab)
 
