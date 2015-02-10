@@ -148,7 +148,7 @@ val parts = line.split(',')
 // parts(1) = "23 56 89" (string)
 parts(0).toDouble  // = 1 (double)
 parts(1).split(' ')  // = Array("23", "56", "89") array of string
-parts(1).split(' ').to(_.toDouble)  // = Array(23, 56, 89) array of double
+parts(1).split(' ').map(_.toDouble)  // = Array(23, 56, 89) array of double
 ```
 ### Running the Examples in Spark
 All of the above example code can be found in **DataType** under package **example**. You can submit it to Spark for execution (c.f. previous lab Spark):
