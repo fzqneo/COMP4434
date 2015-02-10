@@ -45,7 +45,7 @@ Explanation:
 + Then we declare two scalers. The class `StandardScaler` provides the methods to scale the features with mean and variance (optionally).
 + The above code creates two scalers: 
     * `scaler1` scales the features against the standard variance (default behavior); 
-    * `scaler 2` scales the feature agains both the mean and the standard variance (non-default behaviour passed as parameters: `(withMean = true, withStd = true)`).
+    * `scaler2` scales the feature agains both the mean and the standard variance (non-default behaviour passed as parameters: `(withMean = true, withStd = true)`).
 + Before a scaler can scale a feature, it must first scan through **all** training data to calculate the global mean and variance, and store them in internal states. If the feature vectors have *d* dimensions, it would compute *d* means and *d* variances. The `fit()` method does this job.
 + The `StandardScaler.fit()` method only needs the feature values. It doesn't care about the labels. So we need to extract the feature vectors from `data` using a `map()`.
 + After we have calculated the global mean and variance, we can use the scalers to scale the features. The `StandardScaler.transform()` method receives a feature vector and returns a scaled one.
