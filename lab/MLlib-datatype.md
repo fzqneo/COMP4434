@@ -2,7 +2,7 @@
 
 ## Data Types
 
-Download [MLexample.zip](MLexample.zip) and import it into Eclipse. The source code used in this lab is in the file **DataType.scala** under package **example**.
+Download [MLexample.zip](MLexample.zip) and import it into Eclipse. You need to copy the `spark-assembly-1.2.0-hadoop1.0.4.jar` file into the `lib` folder under the project. Create the folder if it doesn't exist yet. The source code used in this lab is in the file **DataType.scala** under package **example**.
 
 ### Vector
 
