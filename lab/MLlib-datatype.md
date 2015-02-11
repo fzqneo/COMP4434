@@ -4,9 +4,10 @@
 
 Download [MLexample.zip](MLexample.zip) and import it into Eclipse. You need to copy the `spark-assembly-1.2.0-hadoop1.0.4.jar` file into the `lib` folder under the project. Create the folder if it doesn't exist yet. The source code used in this lab is in the file **DataType.scala** under package **example**.
 
+
 ### Vector
 
-In **MLlib**, a feature vector is represented as a `Vector` object, which is **a vector of Doubles**.
+In **MLlib**, a feature vector is represented as a `Vector` object, which is **a vector of Double's**.
 
 **Note: Scala automatically imports its native `Vector` class. However, when using MLlib, we need to use the `Vector` class overridden by the MLlib library. So you must explicitly import `org.apache.spark.mllib.linalg.Vector`. **
 
@@ -17,6 +18,8 @@ import org.apache.spark.mllib.linalg.{Vector, Vectors}
 
 // Create a dense Vector (56.0, 0.0, 78.0) using the factory Vectors
 val dv: Vector = Vectors.dense(56.0, 0.0, 78.0)
+// Alternative:
+// val dv = Vectors.dense(56.0, 0.0, 78.0)
 
 /** 
   * Create a sparse vector (56.0, 0.0, 78.0) by specifying its indices and values corresponding to nonzero entries.
