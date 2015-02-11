@@ -8,7 +8,7 @@ Logsitic Regression is a model that learns **binary classification**. That is, f
 
 Reference: https://spark.apache.org/docs/latest/mllib-linear-methods.html#logistic-regression
 
-Step 1. Download [MLexample.zip](../5-MLlib/MLexample.zip). The source code used in this lab is in the file **LogisticReg.scala** under package **example**.
+Step 1. Download [MLexample.zip](../5-MLlib/MLexample.zip). The source code used in this section is in the file **LogisticReg.scala** under package **example**.
 
 Step 2. Study the code in `src/example/LogisticReg.scala`
 
@@ -61,11 +61,40 @@ Step 4. Copy the jar file to the shared folder of the virtual machine.
 Step 5. In the virtual machine, submit the job to Spark. (Assume you already have Spark started.) Note that you need to specify the `--class` that contains the main function. You may also need administrator privilege to access the shared folder via `sudo`.
 
 ```scala
-bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo bin/spark-submit --class "example.LogisticReg" --master spark://localhost:7077 /media/sf_vmshared/MLexample.jar
+bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo bin/spark-submit --class "example.LogisticReg" --master spark://localhost:7077 /path/to/MLexample.jar
 [sudo] password for bigdata: 
 Spark assembly has been built with Hive, including Datanucleus jars on classpath
 Area under ROC = 0.98        
 ```
+
+## Adding Polynomial Terms
+The source code in this section is in the file **AddPolynomial.scala** under package **example**.
+
+Sometimes, we can fit non-linear data with a linear model by explicitly adding polynomial terms of existing features. Doing so may helps us learn more complicated hypothesis.
+
+For example, assuming the original data contains only two features (x<sub>1</sub>, x<sub>2</sub>), we can extend it by adding 2-degree terms: (x<sub>1</sub>, x<sub>2</sub>, x<sub>1</sub><sup>2</sup>, x<sub>2</sub><sup>2</sup>, x<sub>1</sub>x<sub>2</sub>)
+
+```scala
+// Let's make a toy example:
+// A two dimensional dataset with only two samples
+val point1 = new LabeledPoint(1.0, Vectors.dense(2.0, 3.0))
+val point2 = new LabeledPoint(0.0, Vectors.dense(40.0, 15.0))
+val data = sc.parallelize(Array(point1, point2))
+
+// Prepare a function that receives a vector
+// and returns a new vector with added polynomial terms
+def addTerms (inVec: Vector) = {
+  val x1 = inVec.toArray(0)
+  val x2 = inVec.toArray(1)
+  Vectors.dense(x1, x2, x1*x1, x2*x2, x1*x2)
+}
+
+// Add polynomial terms to the data
+def extendedData = data.map { point =>
+  new LabeledPoint(point.label, addTerms(point.features))
+}
+```
+
 
 ### Exercise
 The default behavior of `LogisticRegressionWithSGD` does not add the **intercept**, which may cause \_\_\_\_\_\_\_\_\_\_\_\_\_\_. Try to modify the code above to add the intercept to the model. Observe how it would improve the quality of the model. 
