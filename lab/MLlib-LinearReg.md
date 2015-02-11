@@ -11,36 +11,39 @@ Step 1. Download [MLexample.zip](../5-MLlib/MLexample.zip). The source code used
 Step 2. Study the code in `src/example/LinearReg.scala`
 
 ```scala
-    // Load and parse the data
-	val data = sc.textFile("data/mllib/ridge-data/lpsa.data")
-	val parsedData = data.map { line =>
-	  val parts = line.split(',')
-	  LabeledPoint(parts(0).toDouble, Vectors.dense(parts(1).split(' ').map(_.toDouble)))
-	}.cache()
-	
-	// Building the model
-	val numIterations = 100
-	val model = LinearRegressionWithSGD.train(parsedData, numIterations)
-	
-	// Evaluate model on training examples and compute training error
-	val valuesAndPreds = parsedData.map { point =>
-	  val prediction = model.predict(point.features)
-	  (point.label, prediction)
-	}
-	val MSE = valuesAndPreds.map{case(v, p) => math.pow((v - p), 2)}.mean()
-	println("training Mean Squared Error = " + MSE)
-  }
+// Load and parse the data
+val data = sc.textFile("data/mllib/ridge-data/lpsa.data")
+val parsedData = data.map { line =>
+  val parts = line.split(',')
+  LabeledPoint(parts(0).toDouble, Vectors.dense(parts(1).split(' ').map(_.toDouble)))
+}.cache()
+
+// Train the model
+val numIterations = 100
+/** 
+  * LinearRegressionWithSGD is the name of a pre-defined object.
+  * The train() function returns an object of type LinearRegressionModel
+  * that has been trained on the input data.
+  * It uses stochastic gradient descent (SGD) as the training algorithm.
+  * It uses the default model settings (e.g., no intercept).
+  */
+val trainedModel = LinearRegressionWithSGD.train(parsedData, numIterations)
+
+// Evaluate model on training examples and compute training error
+val actualAndPredictedLabels = parsedData.map { labeledPoint =>
+  // The predict() function of a model receives a feature vector,
+  // and returns a predicted label value.
+  val prediction = trainedModel.predict(labeledPoint.features)
+  (point.label, prediction)
+}
+val MSE = actualAndPredictedLabels.map{case(v, p) => math.pow((v - p), 2)}.mean()
+println("training Mean Squared Error = " + MSE)
   ```
   Explanation:
   + The spark installation comes along with some sample data of machine learning under `data/mllib`. The file `ridge-data/lpsa.data` contains data for regression problems.
   + The first code segment parses the data file into an `RDD[LabeledPoint]` variable called `data`, as we have already learnt.
-  + The **companion object** `LinearRegressionWithSGD` provdes a `train()` function. This function:
-    * Returns a `LinearRegressionModel` --- the type of `model`
-    * Trains the model using **stochastic gradient descent (SGD)**.
-    * Trains with default setting (e.g., default setting uses no regularization).
-  + The companion object saves your trouble to create a new object. However, if you want to train a model with custom settings, you must explictly create a new object with `new LinearRegressionWithSGD()`. Here, `LinearRegressionWithSGD` is a **class** name.  See https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.regression.LinearRegressionWithSGD for more information.
-  + A `LinearRegressionModel` has a `predict()` function. It receive a feature vector (e.g., `point.features`), and outputs a predicted label for that point.
-  + The last code segment calculates the **mean squared error (MSE)** between the real labels and the labels predicted by our model. MSE measures how well the model fits the training data. A smaller MSE means the model fits the training data better.
+  + The pre-defined object `LinearRegressionWithSGD` saves your trouble to create a new object. However, if you want to train a model with custom settings, you must explictly create a new object with `new LinearRegressionWithSGD()` --- here, `LinearRegressionWithSGD` is a **class** name.  After **new**ing an object, you can change the model settings by explicitly calling some functions. See https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.regression.LinearRegressionWithSGD for more information.
+  + The last code segment calculates the **mean squared error (MSE)** between the actual labels and the labels predicted by our model. MSE measures how well the model fits the training data. A smaller MSE means the model fits the training data better.
  
 Step 3. Export the project as a `jar` file. (c.f. previous Spark lab)
 
