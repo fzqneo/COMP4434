@@ -13,38 +13,46 @@ Step 1. Download [MLexample.zip](../5-MLlib/MLexample.zip). The source code used
 Step 2. Study the code in `src/example/LogisticReg.scala`
 
 ```scala
-    // Load training data in LIBSVM format.
-    val data = MLUtils.loadLibSVMFile(sc, "data/mllib/sample_libsvm_data.txt")
-	
-	// Split data into training (60%) and test (40%).
-	val splits = data.randomSplit(Array(0.6, 0.4), seed = System.currentTimeMillis)
-	val training = splits(0).cache()
-	val test = splits(1)
-	
-	// Run training algorithm to build the model
-	val numIterations = 100
-	val model = LogisticRegressionWithSGD.train(training, numIterations)
+// Load training data in LIBSVM format.
+val data = MLUtils.loadLibSVMFile(sc, "data/mllib/sample_libsvm_data.txt")
 
-	// Compute raw scores on the test set. 
-	val scoreAndLabels = test.map { point =>
-	  val score = model.predict(point.features)
-	  (score, point.label)
-	}
-	
-	// Get evaluation metrics.
-	val metrics = new BinaryClassificationMetrics(scoreAndLabels)
-	val auROC = metrics.areaUnderROC()
-	
-	println("Area under ROC = " + auROC)
-  }
+// Split data into training (60%) and test (40%).
+val splits = data.randomSplit(Array(0.6, 0.4), seed = System.currentTimeMillis)
+val trainingSet = splits(0).cache()
+val testSet = splits(1)
+
+// Train the model
+val numIterations = 100
+/** 
+  * Similarly to LinearRegressionModel,
+  * here LogisticRegressionModel is a pre-defined object.
+  * It provdes a train() function that returns a trained LogisticRegressionModel model
+  * with default settings.
+  */
+val trainedModel = LogisticRegressionWithSGD.train(trainingSet, numIterations)
+
+// Compute predicted labels on the test set 
+val actualAndPredictedLabels = testSet.map { labeledPoint =>
+  // Similarly to LinearRegressionModel,
+  // the LogisticRegressionModel provides a predict() function
+  // that receives a feature vector and outputs a predicted label.
+  val prediction = model.predict(point.features)
+  (prediction, labeledPoint.label)
+}
+// BinaryClassificationMetrics is a class
+// that helps you to calculate some quality measurements
+// for a binary classifier.
+val metrics = new BinaryClassificationMetrics(scoreAndLabels)
+val auROC = metrics.areaUnderROC()
+
+println("Area under ROC = " + auROC)
   ```
   
   Explanation:
   
-  + The input file is in the `LIBSVM` format. The utility object `MLUtils` helps to parse LIBSVM files as input and return an **RDD** of `LabeledPoint`.
-  + The second code segment splits the input data into two sets: a training set (60%) and a test set (40%). We should train the model with the training set and evaulate the quality of the model with the test set. (**Why?**)
-  + Similarly to `LinearRegressionWithSGD`, `LogisticRegressionWithSGD` is the name of both a class and an object. The object `LogisticRegressionWithSGD` provides a `train()` function that returns a `LogisticRegressionModel` based on input data using default settings.
-  + **Area under ROC** is a metric that measures *how well the model fits the given data* . Generally it is a value between 0.5 and 1. A larger area under ROC means the model fits the given data more closely.
+  + As we have learnt, the input file is in the `LIBSVM` format. The utility object `MLUtils` helps to parse LIBSVM files as input and return an **RDD** of `LabeledPoint`.
+  + The second code segment splits the input data into two sets: a training set (60%) and a test set (40%). We should train the model with the training set and evaulate the quality of that model with the test set. (**Why?**)
+  + **Area under ROC** is a metric that measures *how well the model fits the given data* . Generally it is a value between 0.5 and 1. A larger area under ROC means the model fits the given data more closely. For deeper understanding, see http://en.wikipedia.org/wiki/Receiver_operating_characteristic
 
 Step 3. Export the project to a `jar` file.
 
@@ -60,5 +68,5 @@ Area under ROC = 0.98
 ```
 
 ### Exercise
-The default `LogisticRegressionWithSGD` does not add the **intercept**, which may cause \_\_\_\_\_\_\_\_\_\_\_\_\_\_. Try to modify the code above to add the intercept to the model. Observe how it would improve the quality of the model. 
-Hint: when you want to train a model with non-default settings, you need to explicitly create a new model object like `new LogisticRegressionWithSGD()`. See more hints at https://spark.apache.org/docs/latest/mllib-linear-methods.html#examples
+The default behavior of `LogisticRegressionWithSGD` does not add the **intercept**, which may cause \_\_\_\_\_\_\_\_\_\_\_\_\_\_. Try to modify the code above to add the intercept to the model. Observe how it would improve the quality of the model. 
+Hint: when you want to train a model with non-default settings, you need to explicitly create a new model object like `new LogisticRegressionWithSGD()`. Refer to: https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.classification.LogisticRegressionWithSGD
