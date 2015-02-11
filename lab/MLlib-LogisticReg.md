@@ -90,7 +90,7 @@ def addTerms (inVec: Vector) = {
 }
 
 // Add polynomial terms to the data
-def extendedData = data.map { point =>
+val extendedData = data.map { point =>
   new LabeledPoint(point.label, addTerms(point.features))
 }
 ```
