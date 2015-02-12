@@ -36,7 +36,7 @@ val actualAndPredictedLabels = testSet.map { labeledPoint =>
   // Similarly to LinearRegressionModel,
   // the LogisticRegressionModel provides a predict() function
   // that receives a feature vector and outputs a predicted label.
-  val prediction = model.predict(point.features)
+  val prediction = trainedModel.predict(labeledPoint.features)
   (prediction, labeledPoint.label)
 }
 // BinaryClassificationMetrics is a class
