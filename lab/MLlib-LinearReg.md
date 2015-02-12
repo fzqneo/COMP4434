@@ -34,7 +34,7 @@ val actualAndPredictedLabels = parsedData.map { labeledPoint =>
   // The predict() function of a model receives a feature vector,
   // and returns a predicted label value.
   val prediction = trainedModel.predict(labeledPoint.features)
-  (point.label, prediction)
+  (labeledPoint.label, prediction)
 }
 val MSE = actualAndPredictedLabels.map{case(v, p) => math.pow((v - p), 2)}.mean()
 println("training Mean Squared Error = " + MSE)
