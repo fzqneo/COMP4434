@@ -51,14 +51,12 @@ Step 3. Export the project as a `jar` file. (c.f. previous Spark lab)
 
 Step 4. In the virtual machine, start Spark with `start-all.sh`
 
-Step 5. Submit the job to **Spark**. Note that you need to specify the `--class` that contains the `main` function. You may also need administrator privilege to access the shared folder via `sudo`.
+Step 5. Submit the job to **Spark**. Note that you need to specify the `--class` that contains the `main` function. 
 
 ```bash
-bigdata@bigdata-VirtualBox:~$ cd Programs/spark-1.2.0-bin-hadoop1/
-bigdata@bigdata-VirtualBox:~/Programs/spark-1.2.0-bin-hadoop1$ sudo bin/spark-submit --class "example.LinearReg" --master spark://localhost:7077 /path/to/MLexample.jar
-[sudo] password for bigdata: 
-Spark assembly has been built with Hive, including Datanucleus jars on classpath
-training Mean Squared Error = 6.206807793307759
+bigdata@bigdata-VirtualBox:~/Programs/spark$ bin/spark-submit --class "example.LinearReg" --master spark://localhost:7077 ~/MLexample.jar
+...
+Training Mean Squared Error = 6.207597210613578
 ```
 
 ### Exercise
