@@ -13,39 +13,42 @@ Step 1. Download [MLexample.zip](../5-MLlib/MLexample.zip). The source code used
 Step 2. Study the code in `src/example/LogisticReg.scala`
 
 ```scala
-// Load training data in LIBSVM format.
-val data = MLUtils.loadLibSVMFile(sc, "data/mllib/sample_libsvm_data.txt")
-
-// Split data into training (60%) and test (40%).
-val splits = data.randomSplit(Array(0.6, 0.4), seed = System.currentTimeMillis)
-val trainingSet = splits(0).cache()
-val testSet = splits(1)
-
-// Train the model
-val numIterations = 100
-/** 
-  * Similarly to LinearRegressionModel,
-  * here LogisticRegressionModel is a pre-defined object.
-  * It provdes a train() function that returns a trained LogisticRegressionModel model
-  * with default settings.
-  */
-val trainedModel = LogisticRegressionWithSGD.train(trainingSet, numIterations)
-
-// Compute predicted labels on the test set 
-val actualAndPredictedLabels = testSet.map { labeledPoint =>
-  // Similarly to LinearRegressionModel,
-  // the LogisticRegressionModel provides a predict() function
-  // that receives a feature vector and outputs a predicted label.
-  val prediction = trainedModel.predict(labeledPoint.features)
-  (prediction, labeledPoint.label)
-}
-// BinaryClassificationMetrics is a class
-// that helps you to calculate some quality measurements
-// for a binary classifier.
-val metrics = new BinaryClassificationMetrics(scoreAndLabels)
-val auROC = metrics.areaUnderROC()
-
-println("Area under ROC = " + auROC)
+    // Load and parse training data in LIBSVM format.
+    // Remember what's the type of 'data' below?
+	val data = MLUtils.loadLibSVMFile(sc, "data/mllib/sample_libsvm_data.txt")
+	
+	// Split data into training set (70%) and test set (30%).
+	val splits = data.randomSplit(Array(0.7, 0.3), seed = System.currentTimeMillis)
+	val trainingSet = splits(0).cache()
+	val testSet = splits(1)
+	
+	// Train the model
+	val numIterations = 100
+	/** 
+	  * Similarly to LinearRegressionModel,
+	  * here LogisticRegressionModel is a built-in object with default settings.
+	  * It provides a train() function that returns a trained LogisticRegressionModel model.
+	  */
+	val trainedModel = LogisticRegressionWithSGD.train(trainingSet, numIterations)
+	
+	// Collect actual and predicted labels on the test set 
+	val actualAndPredictedLabels = testSet.map { labeledPoint =>
+	  // Similarly to LinearRegressionModel,
+	  // the LogisticRegressionModel provides a predict() function
+	  // that receives a feature vector and outputs a predicted label.
+	  val prediction = trainedModel.predict(labeledPoint.features)
+	  (prediction, labeledPoint.label)
+	}
+	
+	/*
+	 *  BinaryClassificationMetrics is a class hat helps you
+	 *  calculate some quality measurements for a binary classifier.
+	 *  Here we use the "area under ROC" measurement.
+	 */
+	val metrics = new BinaryClassificationMetrics(actualAndPredictedLabels)
+	val auROC = metrics.areaUnderROC()
+	
+	println("Area under ROC = " + auROC)  
   ```
   
   Explanation:
